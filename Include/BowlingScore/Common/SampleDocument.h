@@ -21,7 +21,7 @@
 #if !defined( BOWLING_SCORE_COMMON_INCLUDED_SAMPLE_DOCUMENT_H )
 #    define   BOWLING_SCORE_COMMON_INCLUDED_SAMPLE_DOCUMENT_H
 
-#include    "SampleSettings.h"
+#include    "BowlingSettings.h"
 
 #include    <string>
 
