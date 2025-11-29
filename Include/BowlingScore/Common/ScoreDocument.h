@@ -102,6 +102,35 @@ public:
 public:
 
     //----------------------------------------------------------------
+    /**   フレームデータを取得する。
+    **
+    **  @param [in] index   プレーヤー番号。
+    **  @param [in] frame   フレーム番号。
+    **  @return     フレームのスコアデータを返す。
+    **/
+    const   FrameScore  &
+    getFrameScore(
+            const  PlayerIndex  index,
+            const  FrameNumber  frame)  const;
+
+    //----------------------------------------------------------------
+    /**   フレームデータを設定する。
+    **
+    **  @param [in] index   プレーヤー番号。
+    **  @param [in] frame   フレーム番号。
+    **  @param [in] score   フレームのスコアデータ。
+    **  @return     エラーコードを返す。
+    **      -   異常終了の場合は、
+    **          エラーの種類を示す非ゼロ値を返す。
+    **      -   正常終了の場合は、ゼロを返す。
+    **/
+    ErrCode
+    setFrameScore(
+            const  PlayerIndex  index,
+            const  FrameNumber  frame,
+            const  FrameScore  &score);
+
+    //----------------------------------------------------------------
     /**   試合の日付を取得する。
     **
     **  @return     日付を文字列で返す。
