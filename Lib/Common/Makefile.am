@@ -24,7 +24,6 @@ extra_noinst_header_files   =
 
 library_source_files        +=  \
         DocumentFile.cpp               \
-        SampleDocument.cpp             \
         ScoreDocument.cpp              \
         ${extra_library_source_files}
 
@@ -40,7 +39,6 @@ dist_noinst_header_files    +=  \
 inclib_header_files         +=  \
         ${inclib_source_dir}/BowlingProject.h   \
         ${inclib_source_dir}/DocumentFile.h     \
-        ${inclib_source_dir}/SampleDocument.h   \
         ${inclib_source_dir}/ScoreDocument.h    \
         ${extra_library_header_files}
 
