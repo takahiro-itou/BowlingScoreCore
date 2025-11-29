@@ -134,7 +134,7 @@ public:
     //----------------------------------------------------------------
     /**   タイトルを設定する。
     **
-    **  @param [in] value   設定する値。
+    **  @param [in] title   設定する値。
     **  @return     エラーコードを返す。
     **      -   異常終了の場合は、
     **          エラーの種類を示す非ゼロ値を返す。
@@ -143,6 +143,13 @@ public:
     ErrCode
     setGameTitle(
             const  std::string  &title);
+
+    int
+    getNumPlayers()  const;
+
+    ErrCode
+    setNumPlayers(
+            const  int  numPlayers);
 
 //========================================================================
 //
