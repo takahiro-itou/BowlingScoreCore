@@ -37,7 +37,9 @@ class  ScoreDocumentTest : public  TestFixture
 {
     CPPUNIT_TEST_SUITE(ScoreDocumentTest);
     CPPUNIT_TEST(testCtor);
-    CPPUNIT_TEST(testComputeScore);
+    CPPUNIT_TEST(testComputeScore1);
+    CPPUNIT_TEST(testComputeScore2);
+    CPPUNIT_TEST(testComputeScore3);
     CPPUNIT_TEST(testGameDate);
     CPPUNIT_TEST(testGameTitle);
     CPPUNIT_TEST(testNumPlayers);
@@ -50,7 +52,9 @@ public:
 
 private:
     void  testCtor();
-    void  testComputeScore();
+    void  testComputeScore1();
+    void  testComputeScore2();
+    void  testComputeScore3();
     void  testGameDate();
     void  testGameTitle();
     void  testNumPlayers();
@@ -73,7 +77,7 @@ void  ScoreDocumentTest::testCtor()
     return;
 }
 
-void  ScoreDocumentTest::testComputeScore()
+void  ScoreDocumentTest::testComputeScore1()
 {
     Testee  testee;
 
@@ -82,7 +86,7 @@ void  ScoreDocumentTest::testComputeScore()
 
     testee.setNumPlayers(1);
     for ( int i = 0; i < 9; ++ i ) {
-        s01.check   = i * 30;
+        s01.check   = (i + 1) * 30;
         CPPUNIT_ASSERT_EQUAL(
                 ErrCode::SUCCESS, testee.setFrameScore(0, i, s01));
     }
@@ -95,9 +99,52 @@ void  ScoreDocumentTest::testComputeScore()
 
     for ( int i = 0; i < 10; ++ i ) {
         const   FrameScore  &fs = testee.getFrameScore(0, i);
-        CPPUNIT_ASSERT_EQUAL(i * 30, fs.score);
         CPPUNIT_ASSERT_EQUAL(fs.check, fs.score);
+        CPPUNIT_ASSERT_EQUAL((i + 1) * 30, fs.score);
     }
+
+    return;
+}
+
+void  ScoreDocumentTest::testComputeScore2()
+{
+    Testee  testee;
+
+    FrameScore  s1 = {  9, 1, 0, 0, 0, 0, 0, 0 };
+    FrameScore  s2 = { 10, 0, 0, 0, 0, 0, 0, 0 };
+    FrameScore  s3 = { 10, 10, 10, 0, 0, 0, 0, 200 };
+
+    testee.setNumPlayers(1);
+    for ( int i = 0; i < 9; ++ i ) {
+        s1.check    = (i + 1) * 20;
+        s2.check    = (i + 1) * 20;
+        if ( i & 1 ) {
+            CPPUNIT_ASSERT_EQUAL(
+                    ErrCode::SUCCESS, testee.setFrameScore(0, i, s2));
+        } else {
+            CPPUNIT_ASSERT_EQUAL(
+                    ErrCode::SUCCESS, testee.setFrameScore(0, i, s1));
+        }
+    }
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 9, s3));
+
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
+
+    CPPUNIT_ASSERT_EQUAL(
+            200, testee.getFrameScore(0, 9).score);
+
+    for ( int i = 0; i < 10; ++ i ) {
+        const   FrameScore  &fs = testee.getFrameScore(0, i);
+        CPPUNIT_ASSERT_EQUAL(fs.check, fs.score);
+        CPPUNIT_ASSERT_EQUAL((i + 1) * 20, fs.score);
+    }
+
+    return;
+}
+
+void  ScoreDocumentTest::testComputeScore3()
+{
+    Testee  testee;
 
     return;
 }
