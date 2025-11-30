@@ -92,6 +92,43 @@ ErrCode
 ScoreDocument::computeScores(
         const  PlayerIndex  index)
 {
+    ScoreSheet  &ss = this->m_gameScore.at(index);
+    NumPins     sum = 0;
+
+    for ( int i = 0; i < 9; ++ i ) {
+        FrameScore  &sc = ss.frames[i];
+        NumPins     tmp = (sc.got1st + sc.got2nd);
+        if ( sc.got1st == 10 ) {
+            //  ストライク  //
+            //  まず、次のフレームの１投目を加える。    //
+            sum += ss.frames[i + 1].got1st;
+            if ( ss.frames[i + 1].got1st == 10 ) {
+                //  ダブルの時はその次のフレームの１投目も加える。  //
+                if ( i == 8 ) {
+                    //  ９フレーム目のダブルの時は１０フレの１、２投目  //
+                    sum += (ss.frames[i + 1].got2nd);
+                } else {
+                    sum += (ss.frames[i + 2].got1st);
+                }
+            } else {
+                sum += (ss.frames[i + 1].got2nd);
+            }
+        } else if ( tmp == 10 ) {
+            //  スペア。    //
+            sum += ss.frames[i + 1].got1st;
+        }
+        //  そのフレーム自身の点数も加える。    //
+        sum += tmp;
+        sc.score    = sum;
+    }
+
+    //  最終10フレームは例外処理。  //
+    {
+        FrameScore  &sc = ss.frames[9];
+        sum += (sc.got1st + sc.got2nd + sc.got3rd);
+        sc.score    = sum;
+    }
+
     return ( ErrCode::SUCCESS );
 }
 
