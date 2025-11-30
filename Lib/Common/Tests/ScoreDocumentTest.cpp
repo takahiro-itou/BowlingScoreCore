@@ -93,7 +93,6 @@ void  ScoreDocumentTest::testComputeScore1()
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 9, s10));
 
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
-
     CPPUNIT_ASSERT_EQUAL(
             300, testee.getFrameScore(0, 9).score);
 
@@ -129,7 +128,6 @@ void  ScoreDocumentTest::testComputeScore2()
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 9, s3));
 
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
-
     CPPUNIT_ASSERT_EQUAL(
             200, testee.getFrameScore(0, 9).score);
 
@@ -145,6 +143,38 @@ void  ScoreDocumentTest::testComputeScore2()
 void  ScoreDocumentTest::testComputeScore3()
 {
     Testee  testee;
+
+    FrameScore  s01 = { 10, 0, 0, 0x000, 0x000, 0, 0, 21 };
+    FrameScore  s02 = { 10, 0, 0, 0x000, 0x000, 0, 0, 32 };
+    FrameScore  s03 = {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 33 };
+    FrameScore  s04 = { 10, 0, 0, 0x000, 0x000, 0, 0, 44 };
+    FrameScore  s05 = {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 45 };
+    FrameScore  s06 = { 10, 0, 0, 0x000, 0x000, 0, 0, 56 };
+    FrameScore  s07 = {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 57 };
+    FrameScore  s08 = { 10, 0, 0, 0x000, 0x000, 0, 0, 68 };
+    FrameScore  s09 = {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 69 };
+    FrameScore  s10 = { 10, 10, 10, 0, 0, 0, 0, 99 };
+
+    testee.setNumPlayers(1);
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 0, s01));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 1, s02));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 2, s03));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 3, s04));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 4, s05));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 5, s06));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 6, s07));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 7, s08));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 8, s09));
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.setFrameScore(0, 9, s10));
+
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
+    CPPUNIT_ASSERT_EQUAL(
+            99, testee.getFrameScore(0, 9).score);
+
+    for ( int i = 0; i < 10; ++ i ) {
+        const   FrameScore  &fs = testee.getFrameScore(0, i);
+        CPPUNIT_ASSERT_EQUAL(fs.check, fs.score);
+    }
 
     return;
 }
