@@ -90,6 +90,39 @@ ScoreDocument::~ScoreDocument()
 //
 
 //----------------------------------------------------------------
+//    フレームデータを取得する。
+//
+
+const   FrameScore  &
+ScoreDocument::getFrameScore(
+        const  PlayerIndex  index,
+        const  FrameNumber  frame)  const
+{
+    return ( this->m_gameScore.at(index).frames[frame] );
+}
+
+//----------------------------------------------------------------
+//    フレームデータを設定する。
+//
+
+ErrCode
+ScoreDocument::setFrameScore(
+        const  PlayerIndex  index,
+        const  FrameNumber  frame,
+        const  FrameScore  &score)
+{
+    if ( (index < 0) || (this->m_gameScore.size() <= index) ) {
+        return ( ErrCode::INDEX_OUT_OF_RANGE );
+    }
+    if ( (frame < 0) || (10 <= index) ) {
+        return ( ErrCode::INDEX_OUT_OF_RANGE );
+    }
+
+    this->m_gameScore.at(index).frames[frame]   = score;
+    return ( ErrCode::SUCCESS );
+}
+
+//----------------------------------------------------------------
 //    試合の日付を取得する。
 //
 
