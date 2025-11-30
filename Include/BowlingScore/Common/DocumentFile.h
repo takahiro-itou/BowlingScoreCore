@@ -21,8 +21,14 @@
 #if !defined( BOWLINGSCORE_COMMON_INCLUDED_DOCUMENT_FILE_H )
 #    define   BOWLINGSCORE_COMMON_INCLUDED_DOCUMENT_FILE_H
 
-#if !defined( BOWLINGSCORE_COMMON_INCLUDED_BOWLING_SETTINGS_H )
-#    include    "BowlingSettings.h"
+#if !defined( BOWLINGSCORE_COMMON_INCLUDED_BOWLING_TYPES_H )
+#    include    "BowlingTypes.h"
+#endif
+
+
+#if !defined( BOWLINGSCORE_SYS_INCLUDED_IOSFWD )
+#    include    <iosfwd>
+#    define   BOWLINGSCORE_SYS_INCLUDED_IOSFWD
 #endif
 
 #if !defined( BOWLINGSCORE_SYS_STL_INCLUDED_STRING )
@@ -95,6 +101,67 @@ public:
 //
 //    Public Member Functions.
 //
+public:
+
+    //----------------------------------------------------------------
+    /**   データをテキストファイルから読み込む。
+    **
+    **  @param [in] fileName    ファイル名。
+    **  @param[out] ptrDoc      ドキュメントを格納する変数。
+    **  @return     エラーコードを返す。
+    **      -   異常終了の場合は、
+    **          エラーの種類を示す非ゼロ値を返す。
+    **      -   正常終了の場合は、ゼロを返す。
+    **/
+    ErrCode
+    readFromTextFile(
+            const  std::string  &fileName,
+            ScoreDocument  *    ptrDoc);
+
+    //----------------------------------------------------------------
+    /**   データをテキストストリームから読み込む。
+    **
+    **  @param [in,out] inStr     入力ストリーム。
+    **  @param    [out] ptrDoc    ドキュメントを格納する変数。
+    **  @return     エラーコードを返す。
+    **      -   異常終了の場合は、
+    **          エラーの種類を示す非ゼロ値を返す。
+    **      -   正常終了の場合は、ゼロを返す。
+    **/
+    ErrCode
+    readFromTextStream(
+            std::istream       &inStr,
+            ScoreDocument  *    ptrDoc);
+
+    //----------------------------------------------------------------
+    /**   データをテキストファイルに書き込む。
+    **
+    **  @param [in] objDoc      ドキュメント。
+    **  @param [in] fileName    ファイル名。
+    **  @return     エラーコードを返す。
+    **      -   異常終了の場合は、
+    **          エラーの種類を示す非ゼロ値を返す。
+    **      -   正常終了の場合は、ゼロを返す。
+    **/
+    ErrCode
+    saveToTextFile(
+            const  ScoreDocument   & objDoc,
+            const  std::string     & fileName);
+
+    //----------------------------------------------------------------
+    /**   データをテキストストリームに書き込む。
+    **
+    **  @param [in] objDoc    ドキュメント。
+    **  @param[out] outStr    出力ストリーム。
+    **  @return     エラーコードを返す。
+    **      -   異常終了の場合は、
+    **          エラーの種類を示す非ゼロ値を返す。
+    **      -   正常終了の場合は、ゼロを返す。
+    **/
+    ErrCode
+    saveToTextStream(
+            const  ScoreDocument   & objDoc,
+            std::ostream           & outStr);
 
 //========================================================================
 //

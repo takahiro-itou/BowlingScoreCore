@@ -16,14 +16,12 @@ Include (${common_cmake_dir}/BuildCommon/ConfigTarget.cmake)
 
 set(library_source_files
        DocumentFile.cpp
-       SampleDocument.cpp
        ScoreDocument.cpp
 )
 
 set(inclib_header_files
-        ${inclib_source_dir}/BowlingSettings.h
+        ${inclib_source_dir}/BowlingProject.h
         ${inclib_source_dir}/DocumentFile.h
-        ${inclib_source_dir}/SampleDocument.h
         ${inclib_source_dir}/ScoreDocument.h
 )
 
