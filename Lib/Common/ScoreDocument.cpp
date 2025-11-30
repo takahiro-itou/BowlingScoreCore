@@ -44,6 +44,8 @@ namespace  {
 //  （デフォルトコンストラクタ）。
 
 ScoreDocument::ScoreDocument()
+    : m_gameDate(),
+      m_gameTitle()
 {
 }
 
@@ -93,6 +95,7 @@ ScoreDocument::~ScoreDocument()
 const  std::string  &
 ScoreDocument::getGameDate()  const
 {
+    return ( this->m_gameDate );
 }
 
 //----------------------------------------------------------------
@@ -103,6 +106,8 @@ ErrCode
 ScoreDocument::setGameDate(
         const  std::string  &value)
 {
+    this->m_gameDate    = value;
+    return ( ErrCode::SUCCESS );
 }
 
 //----------------------------------------------------------------
@@ -112,6 +117,7 @@ ScoreDocument::setGameDate(
 const  std::string  &
 ScoreDocument::getGameTitle()  const
 {
+    return ( this->m_gameTitle );
 }
 
 //----------------------------------------------------------------
@@ -122,6 +128,8 @@ ErrCode
 ScoreDocument::setGameTitle(
         const  std::string  &title)
 {
+    this->m_gameTitle   = title;
+    return ( ErrCode::SUCCESS );
 }
 
 //----------------------------------------------------------------

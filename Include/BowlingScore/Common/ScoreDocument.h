@@ -233,6 +233,13 @@ public:
 //
 //    Member Variables.
 //
+private:
+
+    /**   試合の日付。      **/
+    std::string     m_gameDate;
+
+    /**   ゲームタイトル。  **/
+    std::string     m_gameTitle;
 
 //========================================================================
 //
