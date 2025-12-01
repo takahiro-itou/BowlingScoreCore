@@ -95,7 +95,7 @@ ScoreDocument::computeScores(
     ScoreSheet  &ss = this->m_gameScore.at(index);
     NumPins     sum = 0;
 
-    NumPins     pins[21] = { 0 };
+    NumPins     pins[33] = { 0 };
     int         offs[11] = { 0 };
 
     //  まず倒したピンの数を、バッファに「詰めて」コピー。  //
@@ -104,11 +104,16 @@ ScoreDocument::computeScores(
         offs[i] = pos;
         FrameScore  &sc = ss.frames[i];
         //  一投目  //
-        if ( ((pins[pos++] = sc.got1st) == 10) && (i < 9) ) {
+        if ( ((pins[pos++] = sum = sc.got1st) == 10) && (i < 9) ) {
             continue;
         }
         //  二投目  //
-        pins[pos++] = sc.got2nd;
+        sum += pins[pos++] = sc.got2nd;
+
+        //  オープンフレームの場合は、番兵を挿入する。  //
+        if ( sum < 10 ) {
+            pins[pos++] = 0;
+        }
     }
     {
         FrameScore  &sc = ss.frames[10];
