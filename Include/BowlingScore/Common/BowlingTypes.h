@@ -118,14 +118,16 @@ struct  FrameScore
 {
     NumPins     got1st;     /**<  一投目で倒したピンの数。  **/
     NumPins     got2nd;     /**<  二投目で倒したピンの数。  **/
-    NumPins     got3rd;     /**<  10フレの三投目で倒したピンの数。  **/
 
     RemainPins  rem1st;     /**<  一投目投球後の残りピン。  **/
     RemainPins  rem2nd;     /**<  二投目投球後の残りピン。  **/
-    RemainPins  rem3rd;     /**<  三投目投球後の残りピン。  **/
 
     NumPins     score;      /**<  このフレームの点数。      **/
     NumPins     check;      /**<  点数のチェック用に記録された値。  **/
+
+    //  Obsolete !  //
+    NumPins     got3rd;     /**<  10フレの三投目で倒したピンの数。  **/
+    RemainPins  rem3rd;     /**<  三投目投球後の残りピン。  **/
 };
 
 
