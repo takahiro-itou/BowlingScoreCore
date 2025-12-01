@@ -74,6 +74,18 @@ void  DocumentFileTest::testReadFromTextStream()
     Testee          testee;
     ScoreDocument   objDoc;
 
+    FrameScore  fs3[10] = {
+        { 10, 0, 0, 0x000, 0x000, 0, 0, 21 },
+        { 10, 0, 0, 0x000, 0x000, 0, 0, 32 },
+        {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 33 },
+        { 10, 0, 0, 0x000, 0x000, 0, 0, 44 },
+        {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 45 },
+        { 10, 0, 0, 0x000, 0x000, 0, 0, 56 },
+        {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 57 },
+        {  1, 0, 0, 0x7FE, 0x7FE, 0, 0, 69 },
+        { 10,10,10, 0x000, 0x000, 0, 0, 99 },
+    };
+
     std::stringstream   ss;
 
     ss  <<
@@ -99,6 +111,23 @@ void  DocumentFileTest::testReadFromTextStream()
         CPPUNIT_ASSERT_EQUAL((j + 1) * 30, fs.score);
     }
 
+    for ( FrameNumber j = 0; j < 9; ++ j ) {
+        const   FrameScore  &fs = objDoc.getFrameScore(1, j);
+        CPPUNIT_ASSERT_EQUAL(fs.check, fs.score);
+        CPPUNIT_ASSERT_EQUAL((j + 1) * 20, fs.score);
+    }
+
+    for ( FrameNumber j = 0; j < 9; ++ j ) {
+        const   FrameScore  &fs = objDoc.getFrameScore(1, j);
+        CPPUNIT_ASSERT_EQUAL(fs.check,  fs.score);
+        CPPUNIT_ASSERT_EQUAL(fs3[j].check, fs.score);
+        CPPUNIT_ASSERT_EQUAL(fs3[j].got1st, fs.got1st);
+        CPPUNIT_ASSERT_EQUAL(fs3[j].got2nd, fs.got2nd);
+        CPPUNIT_ASSERT_EQUAL(fs3[j].got3rd, fs.got3rd);
+        CPPUNIT_ASSERT_EQUAL(fs3[j].rem1st, fs.rem1st);
+        CPPUNIT_ASSERT_EQUAL(fs3[j].rem2nd, fs.rem2nd);
+        CPPUNIT_ASSERT_EQUAL(fs3[j].rem3rd, fs.rem3rd);
+    }
     return;
 }
 
