@@ -20,6 +20,8 @@
 
 #include    "BowlingScore/Common/DocumentFile.h"
 
+#include    <fstream>
+
 
 BOWLINGSCORE_NAMESPACE_BEGIN
 namespace  Common  {
@@ -90,7 +92,8 @@ DocumentFile::readFromTextFile(
         const  std::string  &fileName,
         ScoreDocument  *    ptrDoc)
 {
-    return ( ErrCode::FAILURE );
+    std::ifstream   ifs(fileName.c_str());
+    return  readFromTextStream(ifs, ptrDoc);
 }
 
 //----------------------------------------------------------------
@@ -114,7 +117,8 @@ DocumentFile::saveToTextFile(
         const  ScoreDocument   & objDoc,
         const  std::string     & fileName)
 {
-    return ( ErrCode::FAILURE );
+    std::ofstream   ofs(fileName.c_str());
+    return  saveToTextStream(objDoc, ofs);
 }
 
 //----------------------------------------------------------------
