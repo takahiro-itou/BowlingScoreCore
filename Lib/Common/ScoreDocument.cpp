@@ -127,7 +127,7 @@ ScoreDocument::computeScores(
             sum += (pins[pos + 1] + pins[pos + 2]);
         } else if ( tmp == 10 ) {
             //  スペア  //
-            sum += (pins[pos + 1]);
+            sum += (pins[pos + 2]);
         }
         //  そのフレーム自身の点数も加える。    //
         sum += tmp;
