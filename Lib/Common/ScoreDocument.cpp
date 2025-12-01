@@ -95,27 +95,39 @@ ScoreDocument::computeScores(
     ScoreSheet  &ss = this->m_gameScore.at(index);
     NumPins     sum = 0;
 
+    NumPins     pins[21] = { 0 };
+    int         offs[11] = { 0 };
+
+    //  まず倒したピンの数を、バッファに「詰めて」コピー。  //
+    int pos = 0;
+    for ( int i = 0; i < 10; ++ i ) {
+        offs[i] = pos;
+        FrameScore  &sc = ss.frames[i];
+        //  一投目  //
+        if ( (pins[pos++] = sc.got1st) == 10 ) {
+            continue;
+        }
+        //  二投目  //
+        pins[pos++] = sc.got2nd;
+    }
+    {
+        FrameScore  &sc = ss.frames[10];
+        pins[pos++] = sc.got1st;
+    }
+    offs[10] = pos;
+
     for ( int i = 0; i < 9; ++ i ) {
         FrameScore  &sc = ss.frames[i];
-        NumPins     tmp = (sc.got1st + sc.got2nd);
-        if ( sc.got1st == 10 ) {
+
+        pos = offs[i];
+        const  NumPins  tmp = (sc.got1st + sc.got2nd);
+
+        if ( pins[pos] == 10 ) {
             //  ストライク  //
-            //  まず、次のフレームの１投目を加える。    //
-            sum += ss.frames[i + 1].got1st;
-            if ( ss.frames[i + 1].got1st == 10 ) {
-                //  ダブルの時はその次のフレームの１投目も加える。  //
-                if ( i == 8 ) {
-                    //  ９フレーム目のダブルの時は１０フレの１、２投目  //
-                    sum += (ss.frames[i + 1].got2nd);
-                } else {
-                    sum += (ss.frames[i + 2].got1st);
-                }
-            } else {
-                sum += (ss.frames[i + 1].got2nd);
-            }
+            sum += (pins[pos + 1] + pins[pos + 2]);
         } else if ( tmp == 10 ) {
-            //  スペア。    //
-            sum += ss.frames[i + 1].got1st;
+            //  スペア  //
+            sum += (pins[pos + 1]);
         }
         //  そのフレーム自身の点数も加える。    //
         sum += tmp;
@@ -126,7 +138,7 @@ ScoreDocument::computeScores(
     {
         FrameScore &s10 = ss.frames[ 9];
         FrameScore &s11 = ss.frames[10];
-        sum += (s10.got1st + s10.got2nd + s11.got1st);
+        sum += (pins[pos] + pins[pos + 1] + pins[pos + 2]);
         s10.score   = sum;
         s11.score   = sum;
     }
