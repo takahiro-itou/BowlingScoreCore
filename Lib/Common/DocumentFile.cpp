@@ -105,6 +105,30 @@ DocumentFile::readFromTextStream(
     return ( ErrCode::FAILURE );
 }
 
+//----------------------------------------------------------------
+//    データをテキストファイルに書き込む。
+//
+
+ErrCode
+DocumentFile::saveToTextFile(
+        const  ScoreDocument   & objDoc,
+        const  std::string     & fileName)
+{
+    return ( ErrCode::FAILURE );
+}
+
+//----------------------------------------------------------------
+//    データをテキストストリームに書き込む。
+//
+
+ErrCode
+DocumentFile::saveToTextStream(
+        const  ScoreDocument   & objDoc,
+        std::ostream           & outStr)
+{
+    return ( ErrCode::FAILURE );
+}
+
 //========================================================================
 //
 //    Accessors.
