@@ -81,19 +81,21 @@ void  ScoreDocumentTest::testComputeScore1()
 {
     Testee  testee;
 
-    FrameScore  s01 = { 10, 0, 0x000, 0x000, 0, 30 };
+    FrameScore  s01 = { 10,  0, 0x000, 0x000, 0, 30 };
+    FrameScore  s10 = { 10, 10, 0x000, 0x000, 0, 300 };
+    FrameScore  s11 = { 10,  0, 0x000, 0x000, 0, 300 };
 
     testee.setNumPlayers(1);
-    for ( FrameNumber j = 0; j < 10; ++ j ) {
+    for ( FrameNumber j = 0; j < 9; ++ j ) {
         s01.check   = (j + 1) * 30;
         CPPUNIT_ASSERT_EQUAL(
                 ErrCode::SUCCESS, testee.setFrameScore(0, j, s01));
     }
-    {
-        s01.check   = 300;
-        CPPUNIT_ASSERT_EQUAL(
-                ErrCode::SUCCESS, testee.setFrameScore(0, 10, s01));
-    }
+    CPPUNIT_ASSERT_EQUAL(
+            ErrCode::SUCCESS, testee.setFrameScore(0,  9, s10));
+    CPPUNIT_ASSERT_EQUAL(
+            ErrCode::SUCCESS, testee.setFrameScore(0, 10, s11));
+
 
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
     CPPUNIT_ASSERT_EQUAL(
@@ -127,8 +129,8 @@ void  ScoreDocumentTest::testComputeScore2()
         {  9, 1, 0x400, 0x000, 0, 140 },
         { 10, 0, 0x000, 0x000, 0, 160 },
         {  9, 1, 0x400, 0x000, 0, 180 },
-        { 10,10, 0x000, 0x000, 0, 200 },
-        { 10, 0, 0x000, 0x000, 0, 200 },
+        { 10, 9, 0x000, 0x400, 0, 200 },
+        {  1, 0, 0x000, 0x000, 0, 200 },
     };
 
     testee.setNumPlayers(1);
