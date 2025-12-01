@@ -118,37 +118,39 @@ ScoreDocument::computeScores(
     {
         FrameScore  &sc = ss.frames[10];
         pins[pos++] = sc.got1st;
+        pins[pos]   = 0;
     }
     offs[10] = pos;
 
+    //  配列 pins の内容から、各フレームの点数を計算。  //
+    //  各フレームの先頭位置 pos  を offs から得る。    //
+    //                                          //
+    //  ストライクの場合は、                    //
+    //  そのフレームが pos  にあり、            //
+    //  次の二投 pos+1, pos+2 を加算する。      //
+    //                                          //
+    //  スペアの場合は、                        //
+    //  そのフレームが pos+0, pos+1 にあり      //
+    //  次フレームの一投目が pos+2  にある      //
+    //
+    //  オープンフレームの場合は、              //
+    //  そのフレームが pos+0, pos+1 にあり      //
+    //  番兵として pos+2 に 0 が置かれる。      //
+    //                                          //
+    //  最終 10 フレームについては、            //
+    //  三投分が pos, pos+1, pos+2  にある      //
+    //                                          //
+    //  上記いずれの場合も、                    //
+    //  pos, pos+1, pos+2 番目を合計すれば、    //
+    //  そのフレームで加算される得点となる。    //
+
     sum = 0;
-    for ( int i = 0; i < 9; ++ i ) {
-        FrameScore  &sc = ss.frames[i];
-
+    for ( int i = 0; i < 10; ++ i ) {
         pos = offs[i];
-        const  NumPins  tmp = (sc.got1st + sc.got2nd);
-
-        if ( pins[pos] == 10 ) {
-            //  ストライク  //
-            sum += (pins[pos + 1] + pins[pos + 2]);
-        } else if ( tmp == 10 ) {
-            //  スペア  //
-            sum += (pins[pos + 2]);
-        }
-        //  そのフレーム自身の点数も加える。    //
-        sum += tmp;
-        sc.score    = sum;
-    }
-
-    //  最終10フレームは例外処理。  //
-    {
-        pos = offs[9];
-        FrameScore &s10 = ss.frames[ 9];
-        FrameScore &s11 = ss.frames[10];
         sum += (pins[pos] + pins[pos + 1] + pins[pos + 2]);
-        s10.score   = sum;
-        s11.score   = sum;
+        ss.frames[i].score  = sum;
     }
+    ss.frames[10].score = ss.frames[9].score;
 
     return ( ErrCode::SUCCESS );
 }
