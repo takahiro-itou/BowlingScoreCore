@@ -73,7 +73,7 @@ FrameArray  score3 = {
 
 
 inline  void
-setupFrameScore(
+setupFrameScores(
         ScoreDocument      &objDoc,
         const  PlayerIndex  player,
         const  FrameScore (&scores)[11])
@@ -92,7 +92,7 @@ setupFrameScore(
 
 inline  void
 testFrameScores(
-        const  ScoreDocument    &objDoc,
+        ScoreDocument      &objDoc,
         const  PlayerIndex  player,
         const  FrameScore (&scores)[11])
 {
