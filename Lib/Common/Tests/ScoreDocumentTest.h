@@ -21,5 +21,46 @@
 #if !defined( BOWLINGSCORE_COMMON_INCLUDED_SCORE_DOCUMENT_TEST_H )
 #    define   BOWLINGSCORE_COMMON_INCLUDED_SCORE_DOCUMENT_TEST_H
 
-#endif
+BOWLINGSCORE_NAMESPACE_BEGIN
+namespace  Common  {
 
+
+CONSTEXPR_VAR
+FrameScore  score1[11] = {
+};
+
+CONSTEXPR_VAR
+FrameScore  score2[11] = {
+    {  9, 1, 0x400, 0x000,   0,  20 },
+    { 10, 0, 0x000, 0x000,   0,  40 },
+    {  9, 1, 0x400, 0x000,   0,  60 },
+    { 10, 0, 0x000, 0x000,   0,  80 },
+    {  9, 1, 0x400, 0x000,   0, 100 },
+    { 10, 0, 0x000, 0x000,   0, 120 },
+    {  9, 1, 0x400, 0x000,   0, 140 },
+    { 10, 0, 0x000, 0x000,   0, 160 },
+    {  9, 1, 0x400, 0x000,   0, 180 },
+    { 10, 9, 0x000, 0x400,   0, 200 },
+    {  1, 0, 0x000, 0x000,   0, 200 },
+};
+
+
+CONSTEXPR_VAR
+FrameScore  score3[11] = {
+    { 10, 0, 0x000, 0x000,   0,  21 },
+    { 10, 0, 0x000, 0x000,   0,  32 },
+    {  1, 0, 0x7FE, 0x7FE,   0,  33 },
+    { 10, 0, 0x000, 0x000,   0,  44 },
+    {  1, 0, 0x7FE, 0x7FE,   0,  45 },
+    { 10, 0, 0x000, 0x000,   0,  56 },
+    {  1, 0, 0x7FE, 0x7FE,   0,  57 },
+    { 10, 0, 0x000, 0x000,   0,  68 },
+    {  1, 0, 0x7FE, 0x7FE,   0,  69 },
+    { 10,10, 0x000, 0x000,   0,  99 },
+    { 10, 0, 0x000, 0x000,   0,  99 },
+}
+
+}   //  End of namespace  Common
+BOWLINGSCORE_NAMESPACE_END
+
+#endif
