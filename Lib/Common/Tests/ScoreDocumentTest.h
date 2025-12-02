@@ -71,6 +71,51 @@ FrameArray  score3 = {
     { 10,  0, 0x000, 0x000,   0,  99 },
 };
 
+
+inline  void
+setupFrameScore(
+        ScoreDocument      &objDoc,
+        const  PlayerIndex  player,
+        const  FrameScore (&scores)[11])
+{
+    CONSTEXPR_VAR   FrameNumber
+            NUM_FRAMES  = sizeof(FrameArray) / sizeof(FrameScore);
+
+    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+        CPPUNIT_ASSERT_EQUAL(
+                ErrCode::SUCCESS,
+                objDoc.setFrameScore(player, j, scores[j]));
+    }
+
+    return;
+}
+
+inline  void
+testFrameScores(
+        const  ScoreDocument    &objDoc,
+        const  PlayerIndex  player,
+        const  FrameScore (&scores)[11])
+{
+    CONSTEXPR_VAR   FrameNumber
+            NUM_FRAMES  = sizeof(FrameArray) / sizeof(FrameScore);
+
+
+    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+        const   FrameScore  &fs = objDoc.getFrameScore(player, j);
+
+        CPPUNIT_ASSERT_EQUAL(fs.check, fs.score);
+        CPPUNIT_ASSERT_EQUAL(scores[j].got1st, fs.got1st);
+        CPPUNIT_ASSERT_EQUAL(scores[j].got2nd, fs.got2nd);
+        CPPUNIT_ASSERT_EQUAL(scores[j].rem1st, fs.rem1st);
+        CPPUNIT_ASSERT_EQUAL(scores[j].rem2nd, fs.rem2nd);
+        CPPUNIT_ASSERT_EQUAL(scores[j].check,  fs.score );
+        CPPUNIT_ASSERT_EQUAL(scores[j].check,  fs.check );
+    }
+
+    return;
+}
+
+
 }   //  End of namespace  Common
 BOWLINGSCORE_NAMESPACE_END
 
