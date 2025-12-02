@@ -21,6 +21,8 @@
 #include    "TestDriver.h"
 #include    "BowlingScore/Common/ScoreDocument.h"
 
+#include    "ScoreDocumentTest.h"
+
 
 BOWLINGSCORE_NAMESPACE_BEGIN
 namespace  Common  {
