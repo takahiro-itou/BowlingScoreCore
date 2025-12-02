@@ -126,6 +126,8 @@ struct  FrameScore
     NumPins     check;      /**<  点数のチェック用に記録された値。  **/
 };
 
+typedef     FrameScore  FrameArray[11];
+
 
 //========================================================================
 //
