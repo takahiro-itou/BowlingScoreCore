@@ -42,6 +42,7 @@ class  ScoreDocumentTest : public  TestFixture
     CPPUNIT_TEST(testComputeScore1);
     CPPUNIT_TEST(testComputeScore2);
     CPPUNIT_TEST(testComputeScore3);
+    CPPUNIT_TEST(testComputeScore4);
     CPPUNIT_TEST(testGameDate);
     CPPUNIT_TEST(testGameTitle);
     CPPUNIT_TEST(testNumPlayers);
@@ -57,6 +58,7 @@ private:
     void  testComputeScore1();
     void  testComputeScore2();
     void  testComputeScore3();
+    void  testComputeScore4();
     void  testGameDate();
     void  testGameTitle();
     void  testNumPlayers();
@@ -104,7 +106,7 @@ void  ScoreDocumentTest::testComputeScore2()
 
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
     CPPUNIT_ASSERT_EQUAL(
-            200, testee.getFrameScore(0, 9).score);
+            99, testee.getFrameScore(0, 9).score);
 
     testFrameScores(testee, 0, score2);
 
@@ -120,9 +122,25 @@ void  ScoreDocumentTest::testComputeScore3()
 
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
     CPPUNIT_ASSERT_EQUAL(
-            99, testee.getFrameScore(0, 9).score);
+            200, testee.getFrameScore(0, 9).score);
 
     testFrameScores(testee, 0, score3);
+
+    return;
+}
+
+void  ScoreDocumentTest::testComputeScore4()
+{
+    Testee  testee;
+
+    testee.setNumPlayers(1);
+    setupFrameScores(testee, 0, score4);
+
+    CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
+    CPPUNIT_ASSERT_EQUAL(
+            200, testee.getFrameScore(0, 9).score);
+
+    testFrameScores(testee, 0, score4);
 
     return;
 }
