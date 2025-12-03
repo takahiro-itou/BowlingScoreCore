@@ -80,7 +80,7 @@ void  DocumentFileTest::testReadFromTextStream()
 
     ss  <<
 #include    "SampleData.md"
-        <<  "\n";
+    ;
     CPPUNIT_ASSERT_EQUAL(
             ErrCode::SUCCESS,
             testee.readFromTextStream(ss, &objDoc)
@@ -116,9 +116,16 @@ void  DocumentFileTest::testSaveToTextStream()
 
     objDoc.setNumPlayers(3);
 
+    objDoc.setGameTitle("TITLEofGAME");
+    objDoc.setGameDate("2025/11/30");
+
     setupFrameScores(objDoc, 0, score1);
     setupFrameScores(objDoc, 1, score2);
     setupFrameScores(objDoc, 2, score3);
+
+    objDoc.computeScores(0);
+    objDoc.computeScores(1);
+    objDoc.computeScores(2);
 
     std::stringstream   ss;
     CPPUNIT_ASSERT_EQUAL(
@@ -126,14 +133,22 @@ void  DocumentFileTest::testSaveToTextStream()
             testee.saveToTextStream(objDoc, ss)
     );
 
+    const  std::string  expect(
+#include    "SampleExpect.md"
+    );
+    std::cerr   <<  "\nExpect:\n"
+                <<  expect
+                <<  "---  Size = "
+                <<  expect.size()
+                <<  std::endl;
+
     const  std::string  buf = ss.str();
     std::cerr   <<  "\nOutput Stream:\n"
                 <<  buf
+                <<  "---  Size = "
+                <<  buf.size()
                 <<  std::endl;
 
-    const  std::string  expect(
-#include    "SampleData.md"
-    );
     CPPUNIT_ASSERT_EQUAL(expect, buf);
 
     return;
