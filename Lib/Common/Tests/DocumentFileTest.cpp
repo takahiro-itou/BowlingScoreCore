@@ -162,13 +162,10 @@ void  DocumentFileTest::testSaveToTextStream()
         }
         std::getline(ssAct, act);
 
-        if ( exp != act ) {
+        if ( ! ssAct.good() || (exp != act) ) {
             std::cerr   <<  "Test FAILED at "  <<  (i + 1)  <<  std::endl;
         }
         CPPUNIT_ASSERT_EQUAL(exp, act);
-        if ( ! ssAct.good() ) {
-            break;
-        }
     }
     std::cerr   <<  "Tested "  <<  i  <<  " lines.\n";
 

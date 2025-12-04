@@ -137,6 +137,12 @@ DocumentFile::saveToTextStream(
             <<  "\ndate |"      <<  objDoc.getGameDate()
             <<  "\ntitle |"     <<  objDoc.getGameTitle()
             <<  "\nplayers |"   <<  objDoc.getNumPlayers();
+    for ( PlayerIndex i = 0; i < objDoc.getNumPlayers(); ++ i ) {
+        outStr  <<  "\nplayer"  <<  i
+                <<  " |"
+                <<  objDoc.getPlayerName(i);
+    }
+
     return ( ErrCode::SUCCESS );
 }
 
