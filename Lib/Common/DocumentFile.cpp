@@ -143,6 +143,46 @@ DocumentFile::saveToTextStream(
                 <<  objDoc.getPlayerName(i);
     }
 
+    outStr  <<  "\n\n# score\n\n";
+    for ( PlayerIndex i = 0; i < objDoc.getNumPlayers(); ++ i ) {
+        for ( FrameNumber j = 0; j < 9; ++ j ) {
+            outStr  <<  i  <<  ","  <<  (j + 1)  << ", |";
+            const   FrameScore  &fs = objDoc.getFrameScore(i, j);
+            if ( fs.got1st == 10 ) {
+                outStr  <<  "str,, |* |* |";
+            } else {
+                std::stringstream   rm1;
+                std::stringstream   rm2;
+
+                for ( int k = 1; k <= 10; ++ k  ) {
+                    if ( (fs.rem1st >> k) & 1 ) {
+                        rm1 << k << ",";
+                    }
+                }
+                for ( int k = 1; k <= 10; ++ k  ) {
+                    if ( (fs.rem2nd >> k) & 1 ) {
+                        rm2 << k << ",";
+                    }
+                }
+
+                outStr  <<  fs.got1st  << ",";
+                if ( fs.got1st + fs.got2nd == 10 ) {
+                    outStr  <<  "sp, |"
+                            <<  rm1.str()
+                            <<  " |"
+                            <<  "* |";
+                } else {
+                    outStr  <<  fs.got2nd << ", |"
+                            <<  rm1.str()
+                            <<  " |"
+                            <<  rm2.str()
+                            <<  " |";
+                }
+            }
+            outStr  <<  fs.score    <<  "\n";
+        }
+    }
+
     return ( ErrCode::SUCCESS );
 }
 
