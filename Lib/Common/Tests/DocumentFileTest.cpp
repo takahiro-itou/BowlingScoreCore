@@ -121,7 +121,7 @@ void  DocumentFileTest::testSaveToTextStream()
 
     setupFrameScores(objDoc, 0, score1);
     setupFrameScores(objDoc, 1, score2);
-    setupFrameScores(objDoc, 2, score3);
+    setupFrameScores(objDoc, 2, score4);
 
     objDoc.computeScores(0);
     objDoc.computeScores(1);
