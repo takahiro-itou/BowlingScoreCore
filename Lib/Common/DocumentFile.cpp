@@ -133,6 +133,10 @@ DocumentFile::saveToTextStream(
         const  ScoreDocument   & objDoc,
         std::ostream           & outStr)
 {
+    outStr  <<  "# info\n"
+            <<  "\ndate |"      <<  objDoc.getGameDate()
+            <<  "\ntitle |"     <<  objDoc.getGameTitle()
+            <<  "\nplayers |"   <<  objDoc.getNumPlayers();
     return ( ErrCode::SUCCESS );
 }
 
