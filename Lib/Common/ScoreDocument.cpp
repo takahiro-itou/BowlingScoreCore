@@ -98,7 +98,34 @@ ScoreDocument::computeScores(
     NumPins     pins[33] = { 0 };
     int         offs[11] = { 0 };
 
-    //  まず倒したピンの数を、バッファに「詰めて」コピー。  //
+    //  最初にデータを正規化する。    //
+    for ( int j = 0; j < 10; ++ j ) {
+        FrameScore  &sc = ss.frames[j];
+        sum = (10 - sc.got1st);
+        if ( sc.got2nd > sum ) {
+            sc.got2nd   = sum;
+        }
+    }
+    {
+        FrameScore &fs1= ss.frames[ 9];
+        FrameScore &fs2 = ss.frames[10];
+        sum = (10 - fs1.got1st);
+        if ( sum == 0 ) {
+            sum = 10;
+        }
+        if ( fs1.got2nd > sum ) {
+            fs1.got2nd  = sum;
+        }
+        sum -= fs1.got2nd;
+        if ( sum == 0 ) {
+            sum = 10;
+        }
+        if ( fs2.got1st > sum ) {
+            fs2.got1st  = sum;
+        }
+    }
+
+    //  倒したピンの数を、バッファに「詰めて」コピー。  //
     int pos = 0;
     for ( int i = 0; i < 10; ++ i ) {
         offs[i] = pos;
