@@ -100,24 +100,24 @@ ScoreDocument::computeScores(
 
     //  最初にデータを正規化する。    //
     for ( int j = 0; j < 10; ++ j ) {
-        FrameScore  &sc = ss.frames[j];
-        sum = (10 - sc.got1st);
-        if ( sc.got2nd > sum ) {
-            sc.got2nd   = sum;
+        FrameScore &fs1 = ss.frames[j];
+        sum = (10 - fs1.got1st);
+        if ( fs1.got2nd > sum ) {
+            fs1.got2nd   = sum;
         }
     }
     {
-        FrameScore &fs1= ss.frames[ 9];
+        FrameScore &fs1 = ss.frames[ 9];
         FrameScore &fs2 = ss.frames[10];
         sum = (10 - fs1.got1st);
-        if ( sum == 0 ) {
+        if ( sum <= 0 ) {
             sum = 10;
         }
         if ( fs1.got2nd > sum ) {
             fs1.got2nd  = sum;
         }
         sum -= fs1.got2nd;
-        if ( sum == 0 ) {
+        if ( sum <= 0 ) {
             sum = 10;
         }
         if ( fs2.got1st > sum ) {
