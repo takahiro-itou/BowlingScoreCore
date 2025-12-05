@@ -218,6 +218,29 @@ DocumentFile::readFromTextStream(
         }
         std::cerr   <<  fs1.got1st  << "," << fs1.got2nd
                     <<  ", check="  <<  fs1.check  <<  std::endl;
+
+        //  一投目の残りピン。  //
+        vSub.clear();
+        splitText(vTokens[2], ",", buf2, vSub);
+        fs1.rem1st  = 0;
+        for ( size_t i = 0; i < vSub.size(); ++ i ) {
+            int k = atoi(vSub[i]);
+            if ( k != 0 ) {
+                fs1.rem1st  |= (1 << k);
+            }
+        }
+
+        //  二投目の残りピン。  //
+        vSub.clear();
+        splitText(vTokens[3], ",", buf2, vSub);
+        fs1.rem2nd  = 0;
+        for ( size_t i = 0; i < vSub.size(); ++ i ) {
+            int k = atoi(vSub[i]);
+            if ( k != 0 ) {
+                fs1.rem2nd  |= (1 << k);
+            }
+        }
+
         ptrDoc->setFrameScore(pi, fj - 1, fs1);
     }
 
