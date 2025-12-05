@@ -97,33 +97,11 @@ ScoreDocument::computeScores(
 
     NumPins     pins[33] = { 0 };
     int         offs[11] = { 0 };
+    ErrCode     retCode = ErrCode::SUCCESS;
 
     //  最初にデータを正規化する。    //
-    for ( int j = 0; j < 9; ++ j ) {
-        FrameScore &fs1 = ss.frames[j];
-        sum = (10 - fs1.got1st);
-        if ( fs1.got2nd > sum ) {
-            fs1.got2nd   = sum;
-        }
-    }
-    {
-        FrameScore &fs1 = ss.frames[ 9];
-        FrameScore &fs2 = ss.frames[10];
-        sum = (10 - fs1.got1st);
-        if ( sum <= 0 ) {
-            sum = 10;
-        }
-        if ( fs1.got2nd > sum ) {
-            fs1.got2nd  = sum;
-        }
-        sum -= fs1.got2nd;
-        if ( sum <= 0 ) {
-            sum = 10;
-        }
-        if ( fs2.got1st > sum ) {
-            fs2.got1st  = sum;
-        }
-    }
+    retCode = normalizeScores(index);
+    if ( retCode != ErrCode::SUCCESS ) { return ( retCode ); }
 
     //  倒したピンの数を、バッファに「詰めて」コピー。  //
     int pos = 0;
@@ -178,6 +156,46 @@ ScoreDocument::computeScores(
         ss.frames[i].score  = sum;
     }
     ss.frames[10].score = ss.frames[9].score;
+
+    return ( ErrCode::SUCCESS );
+}
+
+//----------------------------------------------------------------
+//    フレームスコアデータを正規化する。
+//
+
+ErrCode
+ScoreDocument::normalizeScores(
+        const  PlayerIndex  index)
+{
+    NumPins     sum;
+    ScoreSheet  &ss = this->m_gameScore.at(index);
+
+    for ( int j = 0; j < 9; ++ j ) {
+        FrameScore &fs1 = ss.frames[j];
+        sum = (10 - fs1.got1st);
+        if ( fs1.got2nd > sum ) {
+            fs1.got2nd   = sum;
+        }
+    }
+    {
+        FrameScore &fs1 = ss.frames[ 9];
+        FrameScore &fs2 = ss.frames[10];
+        sum = (10 - fs1.got1st);
+        if ( sum <= 0 ) {
+            sum = 10;
+        }
+        if ( fs1.got2nd > sum ) {
+            fs1.got2nd  = sum;
+        }
+        sum -= fs1.got2nd;
+        if ( sum <= 0 ) {
+            sum = 10;
+        }
+        if ( fs2.got1st > sum ) {
+            fs2.got1st  = sum;
+        }
+    }
 
     return ( ErrCode::SUCCESS );
 }
