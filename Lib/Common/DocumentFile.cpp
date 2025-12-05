@@ -23,6 +23,7 @@
 #include    "BowlingScore/Common/ScoreDocument.h"
 
 #include    <iostream>
+#include    <iterator>
 #include    <fstream>
 #include    <sstream>
 #include    <string.h>
@@ -32,6 +33,12 @@ BOWLINGSCORE_NAMESPACE_BEGIN
 namespace  Common  {
 
 namespace  {
+
+inline  void
+rstrip( std::string  &s)
+{
+    s.erase(s.find_last_not_of(" ") + 1);
+}
 
 }   //  End of (Unnamed) namespace.
 
@@ -114,6 +121,8 @@ DocumentFile::readFromTextStream(
 
     int         lineNo  = 0;
     std::string strLine;
+    TextBuffer  buf;
+    TokenArray  vTokens;
 
     while ( inStr.good() ) {
         if ( ! std::getline(inStr, strLine) ) {
@@ -130,6 +139,16 @@ DocumentFile::readFromTextStream(
         if ( strLine[0] == '#' ) {
             continue;
         }
+
+        vTokens.clear();
+        splitText(strLine, "|", buf, vTokens);
+#if 0
+        std::copy(
+                vTokens.begin(), vTokens.end(),
+                std::ostream_iterator<const char *>(ssLogs, "/")
+        );
+        ssLogs  <<  std::endl;
+#endif
     }
 
 #if defined( _DEBUG )
@@ -345,8 +364,8 @@ DocumentFile::splitText(
     ::memcpy(ptrBuf, inText.c_str(), szText);
     ptrBuf[szText]  = '\0';
 
-    char  *         pSaved  = nullptr;
-    const  char  *  pToken  = nullptr;
+    char *  pSaved  = nullptr;
+    char *  pToken  = nullptr;
 
 #if defined( _WIN32 )
     pToken  = strtok_s(ptrBuf, sepChrs, &pSaved);
@@ -355,6 +374,13 @@ DocumentFile::splitText(
 #endif
 
     while ( pToken != nullptr ) {
+        //  末尾にある空白は捨てる。    //
+        char *  pp  = pToken + strlen(pToken) - 1;
+        while ( *pp == ' ' ) {
+            (* pp)  = '\0';
+            -- pp;
+        }
+
         vTokens.push_back(pToken);
 #if defined( _WIN32 )
         pToken  = strtok_s(nullptr, sepChrs, &pSaved);
