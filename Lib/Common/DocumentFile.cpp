@@ -120,6 +120,7 @@ DocumentFile::readFromTextStream(
     std::stringstream   ssLogs;
 
     int         lineNo  = 0;
+    PlayerIndex numPlayers  = 0;
     std::string strLine;
     TextBuffer  buf;
     TokenArray  vTokens;
@@ -160,7 +161,17 @@ DocumentFile::readFromTextStream(
         }
         if ( ! strcmp(vTokens[0], "players") ) {
             std::cerr   <<  "PLAYERS"  <<  vTokens[1];
-            ptrDoc->setNumPlayers(atoi(vTokens[1]));
+            numPlayers  = atoi(vTokens[1]);
+            ptrDoc->setNumPlayers(numPlayers);
+        }
+        for ( PlayerIndex i = 0; i < numPlayers; ++ i ) {
+            std::stringstream   ss;
+            ss  <<  "player"    <<  i;
+            if ( ss.str() == vTokens[0] ) {
+                std::cerr   <<  "PLAYER" <<  i  << ":"
+                            <<  vTokens[1];
+                ptrDoc->setPlayerName(i, vTokens[1]);
+            }
         }
     }
 
