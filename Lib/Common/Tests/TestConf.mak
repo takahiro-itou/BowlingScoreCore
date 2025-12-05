@@ -17,6 +17,7 @@ TESTS                   =  \
 target_testee_library       +=  -lsampleCommon
 
 dist_noinst_data_files      +=  SampleData.md
+dist_noinst_data_files      +=  SampleExpect.md
 dist_noinst_header_files    +=  ScoreDocumentTest.h
 extra_test_drivers          +=
 library_test_drivers        +=
