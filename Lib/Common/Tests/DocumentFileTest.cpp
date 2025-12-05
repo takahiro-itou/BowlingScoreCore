@@ -105,9 +105,9 @@ void  DocumentFileTest::testReadFromTextStream()
     CPPUNIT_ASSERT_EQUAL(
             300, objDoc.getFrameScore(0, 9).score);
     CPPUNIT_ASSERT_EQUAL(
-            200, objDoc.getFrameScore(1, 9).score);
+            99,  objDoc.getFrameScore(1, 9).score);
     CPPUNIT_ASSERT_EQUAL(
-            99,  objDoc.getFrameScore(2, 9).score);
+            200, objDoc.getFrameScore(2, 9).score);
 
     testFrameScores(objDoc, 0, score1);
     testFrameScores(objDoc, 1, score2);

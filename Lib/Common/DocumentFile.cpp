@@ -186,7 +186,7 @@ DocumentFile::readFromTextStream(
         if ( vSub.size() < 2 ) { continue; }
         const  PlayerIndex  pi  = atoi(vSub[0]);
         const  FrameNumber  fj  = atoi(vSub[1]);
-        ssLogs  <<  "pi = " << pi << ", fj = " << fj << std::endl;
+        ssLogs  <<  "pi = " << pi << ", fj = " << fj  <<  ", ";
 
         FrameScore  fs1;
 
