@@ -22,6 +22,7 @@
 
 #include    "BowlingScore/Common/ScoreDocument.h"
 
+#include    <iostream>
 #include    <fstream>
 #include    <sstream>
 
@@ -108,6 +109,17 @@ DocumentFile::readFromTextStream(
         std::istream       &inStr,
         ScoreDocument  *    ptrDoc)
 {
+    int         lineNo;
+    std::string strLine;
+
+    while ( inStr.good() ) {
+        if ( ! std::getline(inStr, strLine) ) {
+            break;
+        }
+        std::cerr   <<  lineNo  <<  " :"
+                    <<  strLine <<  std::endl;
+    }
+
     return ( ErrCode::SUCCESS );
 }
 
