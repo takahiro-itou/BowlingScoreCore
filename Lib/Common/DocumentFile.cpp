@@ -120,6 +120,15 @@ DocumentFile::readFromTextStream(
         }
         ssLogs  <<  (++lineNo)  <<  " :"
                 <<  strLine     <<  std::endl;
+
+        //  空行は読み飛ばす。  //
+        if ( strLine.empty() ) {
+            continue;
+        }
+        //  先頭がハッシュ記号の場合も読み飛ばす。  //
+        if ( strLine[0] == '#' ) {
+            continue;
+        }
     }
 
 #if defined( _DEBUG )
