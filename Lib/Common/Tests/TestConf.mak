@@ -8,6 +8,7 @@ TESTS                   =  \
         BowlingProjectTest      \
         DocumentFileTest        \
         ScoreDocumentTest       \
+        TextParserTest          \
         ${extra_tests}
 
 ##
@@ -37,3 +38,4 @@ test_ldflags_common         +=
 BowlingProjectTest_SOURCES      =  BowlingProjectTest.cpp
 DocumentFileTest_SOURCES        =  DocumentFileTest.cpp
 ScoreDocumentTest_SOURCES       =  ScoreDocumentTest.cpp
+TextParserTest_SOURCES          =  TextParserTest.cpp

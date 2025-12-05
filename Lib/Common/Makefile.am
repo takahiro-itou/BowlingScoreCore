@@ -25,6 +25,7 @@ extra_noinst_header_files   =
 library_source_files        +=  \
         DocumentFile.cpp               \
         ScoreDocument.cpp              \
+        TextParser.cpp                 \
         ${extra_library_source_files}
 
 library_instantiations      +=
@@ -41,6 +42,7 @@ inclib_header_files         +=  \
         ${inclib_source_dir}/BowlingTypes.h     \
         ${inclib_source_dir}/DocumentFile.h     \
         ${inclib_source_dir}/ScoreDocument.h    \
+        ${inclib_source_dir}/TextParser.h       \
         ${extra_library_header_files}
 
 inclib_nodist_header_files  +=

@@ -17,12 +17,15 @@ Include (${common_cmake_dir}/BuildCommon/ConfigTarget.cmake)
 set(library_source_files
        DocumentFile.cpp
        ScoreDocument.cpp
+       TextParser.cpp
 )
 
 set(inclib_header_files
         ${inclib_source_dir}/BowlingProject.h
+        ${inclib_source_dir}/BowlingTypes.h
         ${inclib_source_dir}/DocumentFile.h
         ${inclib_source_dir}/ScoreDocument.h
+        ${inclib_source_dir}/TextParser.h
 )
 
 ##----------------------------------------------------------------
