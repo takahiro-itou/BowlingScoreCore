@@ -109,15 +109,15 @@ DocumentFile::readFromTextStream(
         std::istream       &inStr,
         ScoreDocument  *    ptrDoc)
 {
-    int         lineNo;
+    int         lineNo  = 0;
     std::string strLine;
 
     while ( inStr.good() ) {
         if ( ! std::getline(inStr, strLine) ) {
             break;
         }
-        std::cerr   <<  lineNo  <<  " :"
-                    <<  strLine <<  std::endl;
+        std::cerr   <<  (++lineNo)  <<  " :"
+                    <<  strLine     <<  std::endl;
     }
 
     return ( ErrCode::SUCCESS );
