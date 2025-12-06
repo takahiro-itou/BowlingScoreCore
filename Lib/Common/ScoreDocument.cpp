@@ -241,7 +241,7 @@ ScoreDocument::setFrameScore(
     if ( (index < 0) || (num <= index) ) {
         return ( ErrCode::INDEX_OUT_OF_RANGE );
     }
-    if ( (frame < 0) || (10 <= index) ) {
+    if ( (frame < 0) || (FRAME_ARRAY_SIZE <= frame) ) {
         return ( ErrCode::INDEX_OUT_OF_RANGE );
     }
 
