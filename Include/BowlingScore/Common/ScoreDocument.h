@@ -60,6 +60,11 @@ public:
     {
         std::string     playerName;
         FrameArray      frames;
+
+        ScoreSheet()
+            : playerName(),
+              frames()
+        { }
     };
 
     typedef     std::vector<ScoreSheet>     ScoreArray;
