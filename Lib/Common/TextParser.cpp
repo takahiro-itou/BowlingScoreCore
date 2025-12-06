@@ -113,10 +113,10 @@ TextParser::splitText(
 char  *
 TextParser::stripRight(
         char  *  const  ptrBuf,
-        const  char  *  sepChrs)
+        const  char  *  delChrs)
 {
     char *  pp  = ptrBuf + strlen(ptrBuf) - 1;
-    while ( (*pp == ' ') && (pp >= ptrBuf) ) {
+    while ( (pp >= ptrBuf) && (strchr(delChrs, *pp) != NULL) ) {
         (* pp)  = '\0';
         -- pp;
     }

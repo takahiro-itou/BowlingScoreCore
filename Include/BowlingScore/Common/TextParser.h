@@ -137,7 +137,7 @@ public:
     static  char  *
     stripRight(
             char  *  const  ptrBuf,
-            const  char  *  sepChrs = " ");
+            const  char  *  delChrs = " ");
 
 //========================================================================
 //
