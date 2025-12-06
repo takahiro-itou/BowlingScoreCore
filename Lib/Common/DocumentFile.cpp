@@ -144,7 +144,7 @@ DocumentFile::readFromTextStream(
         }
 
         vTokens.clear();
-        TextParser::splitText(strLine, "|", buf, vTokens);
+        TextParser::splitText(strLine, "|", buf, vTokens, "\t ");
 #if defined( _DEBUG )
         std::copy(
                 vTokens.begin(), vTokens.end(),
