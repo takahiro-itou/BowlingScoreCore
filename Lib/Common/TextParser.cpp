@@ -111,8 +111,9 @@ TextParser::splitText(
 //
 
 char  *
-TextParser::stripRightSpace(
-        char  *  const  ptrBuf)
+TextParser::stripRight(
+        char  *  const  ptrBuf,
+        const  char  *  sepChrs)
 {
     char *  pp  = ptrBuf + strlen(ptrBuf) - 1;
     while ( (*pp == ' ') && (pp >= ptrBuf) ) {

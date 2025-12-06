@@ -127,14 +127,17 @@ public:
             TokenArray          &vTokens);
 
     //----------------------------------------------------------------
-    /**   末尾の空白を削除する。
+    /**   末尾の特定の文字を削除する。
     **
     **  @param [in,out] ptrBuf    入力テキスト。
     **      この文字列の内容は書き換えられる。
+    **  @param [in]     delChrs   削除する文字。
+    **  @return     引数 ptrBuf を返す。
     **/
     static  char  *
-    stripRightSpace(
-            char  *  const  ptrBuf);
+    stripRight(
+            char  *  const  ptrBuf,
+            const  char  *  sepChrs = " ");
 
 //========================================================================
 //

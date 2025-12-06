@@ -246,7 +246,7 @@ void  TextParserTest::testStripRight()
     char    buf[] = "1,2,3, \0";
     const  char  *  ptr;
 
-    ptr = testee.stripRightSpace(buf);
+    ptr = testee.stripRight(buf);
 
     CPPUNIT_ASSERT_EQUAL( (const void *)(ptr), (const void *)(buf) );
     CPPUNIT_ASSERT_EQUAL( std::string("1,2,3,"), std::string(buf) );
