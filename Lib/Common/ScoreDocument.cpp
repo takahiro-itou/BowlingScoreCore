@@ -96,7 +96,7 @@ ScoreDocument::computeScores(
     NumPins     sum = 0;
 
     NumPins     pins[33] = { 0 };
-    int         offs[11] = { 0 };
+    int         offs[FRAME_ARRAY_SIZE]  = { 0 };
     ErrCode     retCode = ErrCode::SUCCESS;
 
     //  最初にデータを正規化する。    //
@@ -105,27 +105,29 @@ ScoreDocument::computeScores(
 
     //  倒したピンの数を、バッファに「詰めて」コピー。  //
     int pos = 0;
-    for ( int i = 0; i < 10; ++ i ) {
-        offs[i] = pos;
-        FrameScore  &sc = ss.frames[i];
+    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+        offs[j] = pos;
+        FrameScore  &sc = ss.frames[j];
         //  一投目  //
-        if ( ((pins[pos++] = sum = sc.got1st) >= 10) && (i < 9) ) {
+        if ( ((pins[pos++] = sum = sc.got1st) >= NUM_PINS_PER_FRAME)
+                && (j < NUM_FRAMES - 1) )
+        {
             continue;
         }
         //  二投目  //
         sum += pins[pos++] = sc.got2nd;
 
         //  オープンフレームの場合は、番兵を挿入する。  //
-        if ( sum < 10 ) {
+        if ( sum < NUM_PINS_PER_FRAME ) {
             pins[pos++] = 0;
         }
     }
     {
-        FrameScore  &sc = ss.frames[10];
+        FrameScore  &sc = ss.frames[NUM_FRAMES];
         pins[pos++] = sc.got1st;
         pins[pos]   = 0;
     }
-    offs[10] = pos;
+    offs[NUM_FRAMES] = pos;
 
     //  配列 pins の内容から、各フレームの点数を計算。  //
     //  各フレームの先頭位置 pos  を offs から得る。    //
@@ -150,12 +152,12 @@ ScoreDocument::computeScores(
     //  そのフレームで加算される得点となる。    //
 
     sum = 0;
-    for ( int i = 0; i < 10; ++ i ) {
-        pos = offs[i];
+    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+        pos = offs[j];
         sum += (pins[pos] + pins[pos + 1] + pins[pos + 2]);
-        ss.frames[i].score  = sum;
+        ss.frames[j].score  = sum;
     }
-    ss.frames[10].score = ss.frames[9].score;
+    ss.frames[NUM_FRAMES].score = ss.frames[NUM_FRAMES - 1].score;
 
     return ( ErrCode::SUCCESS );
 }
