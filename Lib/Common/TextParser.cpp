@@ -110,7 +110,7 @@ TextParser::splitText(
 //    末尾の空白を削除する。
 //
 
-const  char  *
+char  *
 TextParser::stripRightSpace(
         char  *  const  ptrBuf)
 {

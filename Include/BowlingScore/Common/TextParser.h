@@ -54,7 +54,7 @@ class  TextParser
 //
 //    Internal Type Definitions.
 //
-private:
+public:
 
     typedef     std::vector<char>           TextBuffer;
 
@@ -132,7 +132,7 @@ public:
     **  @param [in,out] ptrBuf    入力テキスト。
     **      この文字列の内容は書き換えられる。
     **/
-    static  const  char  *
+    static  char  *
     stripRightSpace(
             char  *  const  ptrBuf);
 
