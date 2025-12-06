@@ -20,6 +20,8 @@
 
 #include    "BowlingScore/Common/TextParser.h"
 
+#include    <cstring>
+
 
 BOWLINGSCORE_NAMESPACE_BEGIN
 namespace  Common  {
@@ -93,7 +95,15 @@ TextParser::splitText(
         TextBuffer          &bufText,
         TokenArray          &vTokens)
 {
-    return ( ErrCode::FAILURE );
+    const   size_t  szText  = inText.size();
+    bufText.clear();
+    bufText.resize(szText + 1);
+    char  *  const  ptrBuf  = &(bufText[0]);
+
+    memcpy(ptrBuf, inText.c_str(), szText);
+    ptrBuf[szText]  = '\0';
+
+    return  splitTextSub(ptrBuf, ptrBuf + szText, sepChrs, vTokens);
 }
 
 //========================================================================
@@ -122,7 +132,7 @@ TextParser::splitTextSub(
         const  char  *  sepChrs,
         TokenArray     &vTokens)
 {
-    return ( ErrCode::FAILURE );
+    return ( ErrCode::SUCCESS );
 }
 
 }   //  End of namespace  Common
