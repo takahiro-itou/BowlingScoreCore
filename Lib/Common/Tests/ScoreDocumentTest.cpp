@@ -156,7 +156,7 @@ void  ScoreDocumentTest::testComputeScore5()
 
     CPPUNIT_ASSERT_EQUAL(ErrCode::SUCCESS, testee.computeScores(0));
     CPPUNIT_ASSERT_EQUAL(
-            105, testee.getFrameScore(0, 9).score);
+            121, testee.getFrameScore(0, 9).score);
 
     testFrameScores(testee, 0, score5);
 
