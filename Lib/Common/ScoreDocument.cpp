@@ -96,58 +96,38 @@ ScoreDocument::computeScores(
     NumPins     sum = 0;
 
     NumPins     pins[33] = { 0 };
-    int         offs[11] = { 0 };
+    int         offs[FRAME_ARRAY_SIZE]  = { 0 };
+    ErrCode     retCode = ErrCode::SUCCESS;
 
     //  最初にデータを正規化する。    //
-    for ( int j = 0; j < 9; ++ j ) {
-        FrameScore &fs1 = ss.frames[j];
-        sum = (10 - fs1.got1st);
-        if ( fs1.got2nd > sum ) {
-            fs1.got2nd   = sum;
-        }
-    }
-    {
-        FrameScore &fs1 = ss.frames[ 9];
-        FrameScore &fs2 = ss.frames[10];
-        sum = (10 - fs1.got1st);
-        if ( sum <= 0 ) {
-            sum = 10;
-        }
-        if ( fs1.got2nd > sum ) {
-            fs1.got2nd  = sum;
-        }
-        sum -= fs1.got2nd;
-        if ( sum <= 0 ) {
-            sum = 10;
-        }
-        if ( fs2.got1st > sum ) {
-            fs2.got1st  = sum;
-        }
-    }
+    retCode = normalizeScores(index);
+    if ( retCode != ErrCode::SUCCESS ) { return ( retCode ); }
 
     //  倒したピンの数を、バッファに「詰めて」コピー。  //
     int pos = 0;
-    for ( int i = 0; i < 10; ++ i ) {
-        offs[i] = pos;
-        FrameScore  &sc = ss.frames[i];
+    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+        offs[j] = pos;
+        FrameScore  &sc = ss.frames[j];
         //  一投目  //
-        if ( ((pins[pos++] = sum = sc.got1st) >= 10) && (i < 9) ) {
+        if ( ((pins[pos++] = sum = sc.got1st) >= NUM_PINS_PER_FRAME)
+                && (j < NUM_FRAMES - 1) )
+        {
             continue;
         }
         //  二投目  //
         sum += pins[pos++] = sc.got2nd;
 
         //  オープンフレームの場合は、番兵を挿入する。  //
-        if ( sum < 10 ) {
+        if ( sum < NUM_PINS_PER_FRAME ) {
             pins[pos++] = 0;
         }
     }
     {
-        FrameScore  &sc = ss.frames[10];
+        FrameScore  &sc = ss.frames[NUM_FRAMES];
         pins[pos++] = sc.got1st;
         pins[pos]   = 0;
     }
-    offs[10] = pos;
+    offs[NUM_FRAMES] = pos;
 
     //  配列 pins の内容から、各フレームの点数を計算。  //
     //  各フレームの先頭位置 pos  を offs から得る。    //
@@ -172,12 +152,60 @@ ScoreDocument::computeScores(
     //  そのフレームで加算される得点となる。    //
 
     sum = 0;
-    for ( int i = 0; i < 10; ++ i ) {
-        pos = offs[i];
+    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+        pos = offs[j];
         sum += (pins[pos] + pins[pos + 1] + pins[pos + 2]);
-        ss.frames[i].score  = sum;
+        ss.frames[j].score  = sum;
     }
-    ss.frames[10].score = ss.frames[9].score;
+    ss.frames[NUM_FRAMES].score = ss.frames[NUM_FRAMES - 1].score;
+
+    return ( ErrCode::SUCCESS );
+}
+
+//----------------------------------------------------------------
+//    フレームスコアデータを正規化する。
+//
+
+ErrCode
+ScoreDocument::normalizeScores(
+        const  PlayerIndex  index)
+{
+    NumPins     rem;
+    ScoreSheet  &ss = this->m_gameScore.at(index);
+
+    for ( FrameNumber j = 0; j < NUM_FRAMES - 1; ++ j ) {
+        FrameScore &fs1 = ss.frames[j];
+        if ( fs1.got1st > NUM_PINS_PER_FRAME ) {
+            fs1.got1st  = NUM_PINS_PER_FRAME;
+        }
+        //  二投目は残っているピンの数より多く倒すことはない。  //
+        rem = (NUM_PINS_PER_FRAME - fs1.got1st);
+        if ( fs1.got2nd > rem ) { fs1.got2nd   = rem; }
+    }
+
+    //  最終フレームは例外処理をする。  //
+    {
+        FrameScore &fs1 = ss.frames[NUM_FRAMES - 1];
+        FrameScore &fs2 = ss.frames[NUM_FRAMES    ];
+        rem = (NUM_PINS_PER_FRAME - fs1.got1st);
+        if ( rem <= 0 ) {
+            rem = NUM_PINS_PER_FRAME;
+        }
+        if ( fs1.got2nd > rem ) {
+            fs1.got2nd  = rem;
+        }
+        rem -= fs1.got2nd;
+        if ( rem <= 0 ) {
+            rem = NUM_PINS_PER_FRAME;
+        }
+        if ( fs1.got1st + fs1.got2nd < NUM_PINS_PER_FRAME ) {
+            //  二回投げて10未満のときは、  //
+            //  三投目を投げられない。      //
+            fs2.got1st  = 0;
+        } else if ( fs2.got1st > rem ) {
+            fs2.got1st  = rem;
+        }
+    }
 
     return ( ErrCode::SUCCESS );
 }
@@ -209,10 +237,11 @@ ScoreDocument::setFrameScore(
         const  FrameNumber  frame,
         const  FrameScore  &score)
 {
-    if ( (index < 0) || (this->m_gameScore.size() <= index) ) {
+    const  PlayerIndex  num = getNumPlayers();
+    if ( (index < 0) || (num <= index) ) {
         return ( ErrCode::INDEX_OUT_OF_RANGE );
     }
-    if ( (frame < 0) || (10 <= index) ) {
+    if ( (frame < 0) || (FRAME_ARRAY_SIZE <= frame) ) {
         return ( ErrCode::INDEX_OUT_OF_RANGE );
     }
 
@@ -306,7 +335,8 @@ ScoreDocument::setPlayerName(
         const  PlayerIndex  index,
         const  std::string  &value)
 {
-    if ( (index < 0) || (this->m_gameScore.size() <= index) ) {
+    const  PlayerIndex  num = getNumPlayers();
+    if ( (index < 0) || (num <= index) ) {
         return ( ErrCode::INDEX_OUT_OF_RANGE );
     }
     this->m_gameScore.at(index).playerName = value;

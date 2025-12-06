@@ -60,6 +60,11 @@ public:
     {
         std::string     playerName;
         FrameArray      frames;
+
+        ScoreSheet()
+            : playerName(),
+              frames()
+        { }
     };
 
     typedef     std::vector<ScoreSheet>     ScoreArray;
@@ -121,6 +126,19 @@ public:
     **/
     ErrCode
     computeScores(
+            const  PlayerIndex  index);
+
+    //----------------------------------------------------------------
+    /**   フレームスコアデータを正規化する。
+    **
+    **  @param [in] index   プレーヤー番号。
+    **  @return     エラーコードを返す。
+    **      -   異常終了の場合は、
+    **          エラーの種類を示す非ゼロ値を返す。
+    **      -   正常終了の場合は、ゼロを返す。
+    **/
+    ErrCode
+    normalizeScores(
             const  PlayerIndex  index);
 
 //========================================================================
