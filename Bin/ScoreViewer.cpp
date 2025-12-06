@@ -29,7 +29,18 @@ int  main(int argc, char * argv[])
 {
     Common::DocumentFile    docFile;
     Common::ScoreDocument   objDoc;
-    ErrCode                 retErr;
+    ErrCode                 retCode;
+
+    if ( argc <= 1 ) {
+        return ( 2 );
+    }
+
+    retCode = docFile.readFromTextFile(
+                    argv[1],
+                    &objDoc);
+    if ( retCode != ErrCode::SUCCESS ) {
+        return ( static_cast<int>(retCode) );
+    }
 
     return ( 0 );
 }
