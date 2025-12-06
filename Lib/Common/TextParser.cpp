@@ -186,7 +186,11 @@ TextParser::splitTextSub(
             if ( pWrite != nullptr ) {
                 *pWrite = '\0';
             }
-            vTokens.push_back(pToken);
+            if ( delChrs != nullptr ) {
+                vTokens.push_back(stripRight(pToken, delChrs));
+            } else {
+                vTokens.push_back(pToken);
+            }
 
             pToken  = p + 1;
             pWrite  = nullptr;
