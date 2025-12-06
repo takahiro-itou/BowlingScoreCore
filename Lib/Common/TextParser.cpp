@@ -187,6 +187,7 @@ TextParser::splitTextSub(
                 *pWrite = '\0';
             }
             vTokens.push_back(pToken);
+
             pToken  = p + 1;
             pWrite  = nullptr;
         }
@@ -199,7 +200,11 @@ TextParser::splitTextSub(
     //  最後の区切り文字以降の分があるのでそれを追加する。  //
     //  ちょうど文字列の末尾が区切り文字だった場合は、      //
     //  最後に空文字列があるものとして追加する必要がある。  //
-    vTokens.push_back(pToken);
+    if ( delChrs != nullptr ) {
+        vTokens.push_back(stripRight(pToken, delChrs));
+    } else {
+        vTokens.push_back(pToken);
+    }
 
     return ( ErrCode::SUCCESS );
 }
