@@ -21,6 +21,7 @@
 #include    "BowlingScore/Common/DocumentFile.h"
 
 #include    "BowlingScore/Common/ScoreDocument.h"
+#include    "BowlingScore/Common/TextParser.h"
 
 #include    <iostream>
 #include    <iterator>
@@ -123,8 +124,8 @@ DocumentFile::readFromTextStream(
     int         lineNo  = 0;
     PlayerIndex numPlayers  = 0;
     std::string strLine;
-    TextBuffer  buf;
-    TokenArray  vTokens;
+    TextParser::TextBuffer  buf;
+    TextParser::TokenArray  vTokens;
 
     while ( inStr.good() ) {
         if ( ! std::getline(inStr, strLine) ) {
@@ -143,7 +144,7 @@ DocumentFile::readFromTextStream(
         }
 
         vTokens.clear();
-        splitText(strLine, "|", buf, vTokens);
+        TextParser::splitText(strLine, "|", buf, vTokens);
 #if defined( _DEBUG )
         std::copy(
                 vTokens.begin(), vTokens.end(),
@@ -175,7 +176,10 @@ DocumentFile::readFromTextStream(
             }
         }
 
-        if ( vTokens.size() != 4 && vTokens.size() != 5 ) {
+        if ( vTokens.size() == 4 ) {
+            std::cerr   <<  "BUG ? "    <<  strLine  <<  std::endl;
+        }
+        if ( vTokens.size() != 5 ) {
             continue;
         }
 
