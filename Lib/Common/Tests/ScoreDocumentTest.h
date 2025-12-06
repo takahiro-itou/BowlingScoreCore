@@ -95,12 +95,9 @@ inline  void
 setupFrameScores(
         ScoreDocument      &objDoc,
         const  PlayerIndex  player,
-        const  FrameScore (&scores)[11])
+        const  FrameArray  &scores)
 {
-    CONSTEXPR_VAR   FrameNumber
-            NUM_FRAMES  = sizeof(FrameArray) / sizeof(FrameScore);
-
-    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+    for ( FrameNumber j = 0; j < FRAME_ARRAY_SIZE; ++ j ) {
         CPPUNIT_ASSERT_EQUAL(
                 ErrCode::SUCCESS,
                 objDoc.setFrameScore(player, j, scores[j]));
@@ -113,13 +110,9 @@ inline  void
 testFrameScores(
         ScoreDocument      &objDoc,
         const  PlayerIndex  player,
-        const  FrameScore (&scores)[11])
+        const  FrameArray  &scores)
 {
-    CONSTEXPR_VAR   FrameNumber
-            NUM_FRAMES  = sizeof(FrameArray) / sizeof(FrameScore);
-
-
-    for ( FrameNumber j = 0; j < NUM_FRAMES; ++ j ) {
+    for ( FrameNumber j = 0; j < FRAME_ARRAY_SIZE; ++ j ) {
         const   FrameScore  &fs = objDoc.getFrameScore(player, j);
 
         CPPUNIT_ASSERT_EQUAL(fs.check, fs.score);
