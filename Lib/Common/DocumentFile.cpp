@@ -320,10 +320,16 @@ DocumentFile::saveToTextStream(
                 }
                 }
 
+                if ( fs.flags & FlagValues::GUTTER_2ND ) {
+                    rm2 <<  "G,";
+                } else if ( fs.flags & FlagValues::FAUL_2ND ) {
+                    rm2 <<  "F,";
+                } else {
                 for ( int k = 1; k <= 10; ++ k ) {
                     if ( (fs.rem2nd >> k) & 1 ) {
                         rm2 << k << ",";
                     }
+                }
                 }
 
                 outStr  <<  fs.got1st  << ",";
