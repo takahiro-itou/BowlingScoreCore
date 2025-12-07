@@ -418,6 +418,11 @@ DocumentFile::saveToTextStream(
         std::stringstream   rm2;
         std::stringstream   rm3;
 
+        if ( fs1.flags & FlagValues::GUTTER_1ST ) {
+            rm1 <<  "G,";
+        } else if ( fs1.flags & FlagValues::FAUL_1ST ) {
+            rm1 <<  "F,";
+        } else {
         if ( fs1.rem1st != 0 ) {
             for ( int k = 1; k <= 10; ++ k ) {
                 if ( (fs1.rem1st >> k) & 1 ) {
@@ -427,7 +432,13 @@ DocumentFile::saveToTextStream(
         } else {
             rm1 <<  "*";
         }
+        }
 
+        if ( fs1.flags & FlagValues::GUTTER_2ND ) {
+            rm2 <<  "G,";
+        } else if ( fs1.flags & FlagValues::FAUL_2ND ) {
+            rm2 <<  "F,";
+        } else {
         if ( fs1.rem2nd != 0 ) {
             for ( int k = 1; k <= 10; ++ k ) {
                 if ( (fs1.rem2nd >> k) & 1 ) {
@@ -436,6 +447,7 @@ DocumentFile::saveToTextStream(
             }
         } else {
             rm2 <<  "*";
+        }
         }
 
         if ( fs3.rem1st != 0 ) {
