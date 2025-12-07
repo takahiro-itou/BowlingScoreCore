@@ -388,14 +388,48 @@ DocumentFile::saveToTextStream(
                     //  ターキー
                     bf3 <<  "str";
                 } else  {
-                    bf3 <<  fs3.got1st;
+                    if ( fs3.flags & FlagValues::MISS_1ST ) {
+                        bf3 <<  "-";
+                    } else if ( fs3.flags & FlagValues::GUTTER_1ST ) {
+                        bf3 <<  "G";
+                    } else if ( fs3.flags & FlagValues::FAUL_1ST ) {
+                        bf3 <<  "F";
+                    } else {
+                        bf3 <<  fs3.got1st;
+                        if ( fs3.flags & FlagValues::SPLIT_1ST ) {
+                            bf3 <<  "s";
+                        }
+                    }
                 }
             } else {
-                bf2 <<  fs1.got2nd;
+                if ( fs1.flags & FlagValues::MISS_2ND ) {
+                    bf2 <<  "-";
+                } else if ( fs1.flags & FlagValues::GUTTER_2ND ) {
+                    bf2 <<  "G";
+                } else if ( fs1.flags & FlagValues::FAUL_2ND ) {
+                    bf2 <<  "F";
+                } else {
+                    bf2 <<  fs1.got2nd;
+                    if ( fs1.flags & FlagValues::SPLIT_2ND ) {
+                        bf2 <<  "s";
+                    }
+                }
+
                 if ( fs1.got2nd + fs3.got1st >= 10 ) {
                     bf3 <<  "sp";
                 } else {
-                    bf3 <<  fs3.got1st;
+                    if ( fs3.flags & FlagValues::MISS_1ST ) {
+                        bf3 <<  "-";
+                    } else if ( fs3.flags & FlagValues::GUTTER_1ST ) {
+                        bf3 <<  "G";
+                    } else if ( fs3.flags & FlagValues::FAUL_1ST ) {
+                        bf3 <<  "F";
+                    } else {
+                        bf3 <<  fs3.got1st;
+                        if ( fs3.flags & FlagValues::SPLIT_1ST ) {
+                            bf3 <<  "s";
+                        }
+                    }
                 }
             }
         } else {
