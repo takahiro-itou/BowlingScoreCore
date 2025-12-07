@@ -229,6 +229,10 @@ DocumentFile::readFromTextStream(
                     <<  ", check="  <<  fs1.check  <<  std::endl;
 
         //  一投目の残りピン。  //
+        if ( fs1.got1st == 0 ) {
+            //  スコアがゼロ、つまりピンが全部残っている。  //
+            fs1.rem1st  = 0x07FE;
+        } else {
         vSub.clear();
         TextParser::splitText(vTokens[2], ",", buf2, vSub, " \t");
         fs1.rem1st  = 0;
@@ -237,6 +241,7 @@ DocumentFile::readFromTextStream(
             if ( k != 0 ) {
                 fs1.rem1st  |= (1 << k);
             }
+        }
         }
 
         //  二投目の残りピン。  //
