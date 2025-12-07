@@ -344,17 +344,17 @@ DocumentFile::saveToTextStream(
                     }
                 }
                 if ( fs.got1st + fs.got2nd >= 10 ) {
-                    outStr  <<  "sp, |"
-                            <<  rm1.str()
-                            <<  " |"
-                            <<  "* |";
+                    outStr  <<  "sp";
+                    rm2.clear();
+                    rm2.str("*");
                 } else {
-                    outStr  <<  fs.got2nd << ", |"
-                            <<  rm1.str()
-                            <<  " |"
-                            <<  rm2.str()
-                            <<  " |";
+                    outStr  <<  fs.got2nd;
                 }
+                outStr  <<  ", |"
+                        <<  rm1.str()
+                        <<  " |"
+                        <<  rm2.str()
+                        <<  " |";
             }
             outStr  <<  fs.score    <<  "\n";
         }
