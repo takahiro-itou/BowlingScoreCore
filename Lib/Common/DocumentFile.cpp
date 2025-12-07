@@ -176,9 +176,6 @@ DocumentFile::readFromTextStream(
             }
         }
 
-        if ( vTokens.size() == 4 ) {
-            std::cerr   <<  "BUG ? "    <<  strLine  <<  std::endl;
-        }
         if ( vTokens.size() != 5 ) {
             continue;
         }
@@ -213,10 +210,17 @@ DocumentFile::readFromTextStream(
             fs1.got2nd  = atoi(vSub[1]);
         }
 
-        if ( fj == 11 && vTokens.size() == 4 ) {
-            //  第11フレームのカラム数が足りない時は、  //
-            //  検証用スコアデータが省略されたと場合。  //
-            fs1.check   = ptrDoc->getFrameScore(pi, 9).check;
+        if ( fj == 11 ) {
+            if ( vTokens.size() == 4 ) {
+                //  第11フレームのカラム数が足りない時は、  //
+                //  検証用スコアデータが省略されたと場合。  //
+                fs1.check   = 0;
+            } else {
+                fs1.check   = atoi(vTokens[4]);
+            }
+            if ( fs1.check == 0 ) {
+                fs1.check   = ptrDoc->getFrameScore(pi, 9).check;
+            }
         } else {
             fs1.check   = atoi(vTokens[4]);
         }
