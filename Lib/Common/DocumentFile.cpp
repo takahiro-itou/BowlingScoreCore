@@ -23,7 +23,7 @@
 #include    "BowlingScore/Common/ScoreDocument.h"
 #include    "BowlingScore/Common/TextParser.h"
 
-#include    <iostream>
+
 #include    <iterator>
 #include    <fstream>
 #include    <sstream>
@@ -118,8 +118,8 @@ DocumentFile::readFromTextStream(
         std::istream       &inStr,
         ScoreDocument  *    ptrDoc)
 {
-    //std::stringstream   ssLogs;
-    std::ostream  & ssLogs  = std::cerr;
+    std::stringstream   ssLogs;
+    //  std::ostream  & ssLogs  = std::cerr;
 
     int         lineNo  = 0;
     PlayerIndex numPlayers  = 0;
@@ -154,15 +154,12 @@ DocumentFile::readFromTextStream(
 #endif
 
         if ( ! strcmp(vTokens[0], "date") ) {
-            std::cerr   <<  "DATE:"  <<  vTokens[1];
             ptrDoc->setGameDate(vTokens[1]);
         }
         if ( ! strcmp(vTokens[0], "title") ) {
-            std::cerr   <<  "TITLE:"  <<  vTokens[1];
             ptrDoc->setGameTitle(vTokens[1]);
         }
         if ( ! strcmp(vTokens[0], "players") ) {
-            std::cerr   <<  "PLAYERS"  <<  vTokens[1];
             numPlayers  = atoi(vTokens[1]);
             ptrDoc->setNumPlayers(numPlayers);
         }
@@ -170,8 +167,6 @@ DocumentFile::readFromTextStream(
             std::stringstream   ss;
             ss  <<  "player"    <<  i;
             if ( ss.str() == vTokens[0] ) {
-                std::cerr   <<  "PLAYER" <<  i  << ":"
-                            <<  vTokens[1];
                 ptrDoc->setPlayerName(i, vTokens[1]);
             }
         }
@@ -225,8 +220,6 @@ DocumentFile::readFromTextStream(
         } else {
             fs1.check   = atoi(vTokens[4]);
         }
-        std::cerr   <<  fs1.got1st  << "," << fs1.got2nd
-                    <<  ", check="  <<  fs1.check  <<  std::endl;
 
         //  一投目の残りピン。  //
         if ( fs1.got1st == 0 ) {
