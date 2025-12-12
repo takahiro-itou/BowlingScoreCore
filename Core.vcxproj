@@ -77,16 +77,16 @@
   </ItemDefinitionGroup>
 
   <ItemGroup>
-    <ClCompile Include="..\Core\Lib\Common\DocumentFile.cpp" />
-    <ClCompile Include="..\Core\Lib\Common\ScoreDocument.cpp" />
-    <ClCompile Include="..\Core\Lib\Common\TextParser.cpp" />
+    <ClCompile Include="Lib\Common\DocumentFile.cpp" />
+    <ClCompile Include="Lib\Common\ScoreDocument.cpp" />
+    <ClCompile Include="Lib\Common\TextParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Core\Include\BowlingScore\Common\BowlingProject.h" />
-    <ClInclude Include="..\Core\Include\BowlingScore\Common\BowlingTypes.h" />
-    <ClInclude Include="..\Core\Include\BowlingScore\Common\DocumentFile.h" />
-    <ClInclude Include="..\Core\Include\BowlingScore\Common\ScoreDocument.h" />
-    <ClInclude Include="..\Core\Include\BowlingScore\Common\TextParser.h" />
+    <ClInclude Include="Include\BowlingScore\Common\BowlingProject.h" />
+    <ClInclude Include="Include\BowlingScore\Common\BowlingTypes.h" />
+    <ClInclude Include="Include\BowlingScore\Common\DocumentFile.h" />
+    <ClInclude Include="Include\BowlingScore\Common\ScoreDocument.h" />
+    <ClInclude Include="Include\BowlingScore\Common\TextParser.h" />
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
